@@ -1,26 +1,62 @@
 function ConvertHandler() {
   
   this.getNum = function(input) {
-    let result = parseFloat(input);
-    if(isNaN(result)){return 1;}
+    let result;
+
+    if(input.includes('/')){
+      let fraction = '';
+      
+      for(let i = 0; i < input.length; i ++){
+        let currectChar = input.charAt(i);
+        if(!isNaN(currectChar) || currectChar === '/' || currectChar === '.'){
+          fraction += currectChar;
+        }        
+      }
+      let nums = fraction.split('/');
+      
+      if(nums.length === 2){
+        return parseFloat(nums[0])/parseFloat(nums[1]);
+      }else{
+        throw new Error('Invalid Number');
+      }
+
+    }else{
+      result = parseFloat(input);
+    }
+
+    if(isNaN(result)){
+      return 1;
+    }
+
     return result;
   };
   
   this.getUnit = function(input) {
+    let possible = ['gal', 'lbs', 'mi', 'l', 'kg', 'km'];
     let result = "";
     input = input.toLowerCase();
     for(let i = 0 ; i < input.length; i ++){
-      if(!(input.charAt(i) === '.') && (isNaN(input.charAt(i))) && (input.charAt(i) !== ' ')){
+      if(!(input.charAt(i) === '.' || input.charAt(i) === '/') && (isNaN(input.charAt(i))) && (input.charAt(i) !== ' ')){
         result += input.charAt(i);
       }
     }  
-    return result;
+    if(possible.includes(result)){
+      if(result === 'l'){
+        return result.toUpperCase();
+      }
+      return result;
+    }else{
+      throw new Error('Invalid unit');
+    }
+    
   };
   
-  this.getReturnUnit = function(initUnit) {
-    let result;
+  this.getReturnUnit = function(initUnit) {    
+    if(initUnit !== 'L'){
+      initUnit = initUnit.toLowerCase();
+    }
     let given = ['gal', 'lbs', 'mi'];
-    let converted = ['l', 'kg', 'km'];
+    let converted = ['L', 'kg', 'km'];
     for(let i = 0 ; i < 3; i++){
       if(given[i] === initUnit){
         return converted[i];
@@ -29,10 +65,11 @@ function ConvertHandler() {
         return given[i];
       }
     }
-    return 'IU';
+    throw new Error('Invalid unit');
   };
 
   this.spellOutUnit = function(unit) {    
+    unit = unit.toLowerCase();
     let spellings = {
       'gal': 'gallons',
       'mi': 'miles',
@@ -44,9 +81,11 @@ function ConvertHandler() {
 
     if(spellings[unit]){
       return spellings[unit];
+    }else{
+      throw new Error('Invalid unit');
     }
 
-    return 'invalid unit';
+    
   };
   
   this.convert = function(initNum, initUnit) {
@@ -68,8 +107,7 @@ function ConvertHandler() {
   };
   
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
-    let result;
-    
+    let result = `${initNum} ${this.spellOutUnit(initUnit)} converts to ${returnNum} ${this.spellOutUnit(returnUnit)}`;    
     return result;
   };
   
