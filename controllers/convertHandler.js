@@ -28,6 +28,10 @@ function ConvertHandler() {
       return 1;
     }
 
+    if(result === 0){
+      throw new Error('Invalid Number');
+    }
+
     return result;
   };
   
@@ -95,15 +99,16 @@ function ConvertHandler() {
     let result = initNum;
 
     switch(initUnit){
-      case 'l': result/=galToL; break;
+      case 'L': result/=galToL; break;
       case 'kg': result/=lbsToKg; break;
       case 'lbs': result*=lbsToKg; break;
       case 'gal': result*=galToL; break;
       case 'mi': result*=miToKm; break;
       case 'km': result/=miToKm; break;
+      default: throw new Error('Invalid unit');
     }
     
-    return result;
+    return result.toFixed(5);
   };
   
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {

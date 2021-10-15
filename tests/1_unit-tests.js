@@ -8,11 +8,15 @@ suite('Unit Tests', function(){
     suite('Reading number', function(){
         test('reading whole number', () => {            
             assert.equal(convertHandler.getNum('14l'), 14);            
-            
         });
+
+        test('Reading zero', ()=>{
+            assert.throws(()=>{convertHandler.getNum('0mi')}, 'Invalid Number');
+        })
 
         test('Reading decimal number', () => {
             assert.equal(convertHandler.getNum('14.1l'), 14.1);
+            assert.equal(convertHandler.getNum('0.1mi'), 0.1);
         });
 
         test('Reading fractional values', ()=>{
@@ -157,6 +161,60 @@ suite('Unit Tests', function(){
         });
     })
 
-    
+    suite('Converting measures', ()=>{
+        suite('Converting whole number measures', ()=>{
+            test('Litre to Gallon', ()=>{
+                assert.equal(convertHandler.convert(2, 'L'), 0.52834);
+            });
+
+            test('Gallon to Litre', ()=>{
+                assert.equal(convertHandler.convert(2, 'gal'), 7.57082);
+            });
+
+            test('Mile to Kilometer', ()=>{
+                assert.equal(convertHandler.convert(2, 'mi'), 3.21868);
+            });
+
+            test('Kilometer to Mile', ()=>{
+                assert.equal(convertHandler.convert(2, 'km'), 1.24275);
+            });
+
+            test('Pound to Kilogram', ()=>{
+                assert.equal(convertHandler.convert(2, 'lbs'), 0.90718);
+            });
+
+            test('Kilogram to Pound', ()=>{
+                assert.equal(convertHandler.convert(2, 'kg'), 4.40925);
+            });
+
+        })
+
+        suite('Converting decimal number measures', () => {
+            test('Litre to Gallon', () => {
+                assert.equal(convertHandler.convert(2.12, 'L'), 0.56005);
+            });
+
+            test('Gallon to Litre', () => {
+                assert.equal(convertHandler.convert(2.12, 'gal'), 8.02507);
+            });
+
+            test('Mile to Kilometer', () => {
+                assert.equal(convertHandler.convert(2.12, 'mi'), 3.41180);
+            });
+
+            test('Kilometer to Mile', () => {
+                assert.equal(convertHandler.convert(2.12, 'km'), 1.31731);
+            });
+
+            test('Pound to Kilogram', () => {
+                assert.equal(convertHandler.convert(2.12, 'lbs'), 0.96162);
+            });
+
+            test('Kilogram to Pound', () => {
+                assert.equal(convertHandler.convert(2.12, 'kg'), 4.67380);
+            });
+
+        })
+    })
 
 });
