@@ -14,7 +14,7 @@ function ConvertHandler() {
       }
       let nums = fraction.split('/');
       
-      if(nums.length === 2){
+      if(nums.length === 2 && nums[0] !== 0 && nums[1] !== 0){
         return parseFloat(nums[0])/parseFloat(nums[1]);
       }else{
         throw new Error('Invalid Number');
@@ -78,7 +78,7 @@ function ConvertHandler() {
       'gal': 'gallons',
       'mi': 'miles',
       'lbs': 'pounds',
-      'l': 'litres',
+      'l': 'liters',
       'kg': 'kilograms',
       'km': 'kilometers'
     }
@@ -108,7 +108,7 @@ function ConvertHandler() {
       default: throw new Error('Invalid unit');
     }
     
-    return result.toFixed(5);
+    return parseFloat(result.toFixed(5));
   };
   
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {

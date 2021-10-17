@@ -120,7 +120,7 @@ suite('Unit Tests', function(){
             });
 
             test('l', () => {
-                assert.equal(convertHandler.spellOutUnit('l'), 'litres');
+                assert.equal(convertHandler.spellOutUnit('l'), 'liters');
             });
 
             test('km', () => {
