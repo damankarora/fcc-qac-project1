@@ -50,4 +50,18 @@ suite('Functional Tests', function() {
             })
     })
 
+    test('Convert with no Number', () => {
+        chai.request(server)
+            .get('/api/convert')
+            .query({ input: 'L' })
+            .end((err, res) => {
+                // assert.equal(res.type, 'application/json');
+                assert.equal(res.status, 200);
+                assert.deepEqual(res.body, { "initNum": 1, "initUnit": "L", "returnNum": 0.26417, "returnUnit": "gal", "string": "1 liters converts to 0.26417 gallons" })
+            })
+    });
+
+    
+    
+
 });
